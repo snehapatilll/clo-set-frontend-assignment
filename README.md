@@ -1,46 +1,71 @@
-# Getting Started with Create React App
+# CLO-SET Connect – Frontend Developer Assignment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the solution to the Frontend Developer Assignment provided by CLO Virtual Fashion. The project implements a content listing page with filtering, search, infinite scrolling, and responsive layout based on the CLO-SET Store design.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🔧 Tech Stack
 
-### `npm start`
+- ⚛️ **React** (with TypeScript)
+- 🎨 **SCSS** (CSS preprocessor)
+- 🔄 **Redux Toolkit** (state management)
+- 🌐 **Axios** (API requests)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 📦 Features Implemented
 
-### `npm test`
+### ✅ Required Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Pricing Filters**: Free / Paid / View Only (multi-select + reset)
+- **Keyword Search**: Filter by username or title
+- **Responsive Grid Layout**:
+  - 4 columns (default)
+  - 3 columns (< 1200px)
+  - 2 columns (< 768px)
+  - 1 column (< 480px)
+- **Infinite Scroll**: Loads more items as the user scrolls
+- **Filter/Search Persistence**: Maintains state across infinite scroll (without localStorage)
 
-### `npm run build`
+### ✨ Optional Enhancements (if implemented)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 🔃 Sorting dropdown
+- 💰 Price range slider (only when "Paid" is selected)
+- 🦴 Skeleton loader while loading
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🚀 Getting Started
 
-### `npm run eject`
+### 1. Clone the Repository
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+git clone https://github.com/snehapatilll/clo-set-frontend-assignment.git
+cd clo-set-frontend-assignment
+npm install
+npm start
+The app will start on http://localhost:3000
+src/
+├── api/               # API integration
+├── components/        # UI components (search, filter, grid)
+├── redux/             # State management (store + slice)
+├── styles/            # SCSS styles and variables
+├── App.tsx
+└── index.tsx
+🔗 API Source
+[GET] https://closet-recruiting-api.azurewebsites.net/api/data
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+👩🏻‍💻 Author
+Sneha Patil
+Frontend Developer
+📧 snehapatil112001@gmail.com
+🔗[ GitHub Profile](https://github.com/snehapatilll)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+---
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+After saving the file:
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+git add README.md
+git commit -m "Add README with project details"
+git push
