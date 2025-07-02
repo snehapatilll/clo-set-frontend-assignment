@@ -5,6 +5,7 @@ import { AppDispatch } from './redux/store';
 import FilterPanel from './components/FilterPanel';
 import SearchBar from './components/SearchBar';
 import ContentGrid from './components/ContentGrid';
+import SortDropdown from './components/SortDropdown';
 
 const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,6 +18,7 @@ const App: React.FC = () => {
     <div className="app">
       <SearchBar />
       <FilterPanel />
+      <SortDropdown />
       <ContentGrid />
     </div>
   );

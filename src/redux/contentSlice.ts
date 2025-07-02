@@ -6,6 +6,7 @@ import axios from 'axios';
 // ----------------------------
 
 export type PricingOption = 'Free' | 'Paid' | 'View Only';
+type SortOption = 'Item Name' | 'Higher Price' | 'Lower Price';
 
 export interface ContentItem {
   id: string;
@@ -33,6 +34,7 @@ interface ContentState {
   keyword: string;
   currentPage: number;
   itemsPerPage: number;
+  sortOption: SortOption;
   loading: boolean;
   error: string | null;
 }
@@ -44,6 +46,7 @@ const initialState: ContentState = {
   keyword: '',
   currentPage: 1,
   itemsPerPage: 20,
+  sortOption: 'Item Name',
   loading: false,
   error: null,
 };
@@ -86,12 +89,13 @@ export const fetchContents = createAsyncThunk(
 // Helper: Apply filters & search
 // ----------------------------
 
-const applyFiltersAndSearch = (
+const applyFiltersSearchSort = (
   data: ContentItem[],
   filters: PricingOption[],
-  keyword: string
+  keyword: string,
+  sort: SortOption
 ) => {
-  return data.filter((item) => {
+  let filtered = data.filter((item) => {
     const matchesFilter =
       filters.length === 0 || filters.includes(item.pricingOption);
 
@@ -102,7 +106,19 @@ const applyFiltersAndSearch = (
 
     return matchesFilter && matchesKeyword;
   });
+
+  if (sort === 'Item Name') {
+    filtered.sort((a, b) => a.title.localeCompare(b.title));
+  } else if (sort === 'Higher Price') {
+    filtered.sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
+  } else if (sort === 'Lower Price') {
+    filtered.sort((a, b) => (a.price ?? 0) - (b.price ?? 0));
+  }
+
+  return filtered;
 };
+
+
 
 // ----------------------------
 // Slice
@@ -115,13 +131,13 @@ const contentSlice = createSlice({
     setFilters(state, action: PayloadAction<PricingOption[]>) {
       state.filters = action.payload;
       state.currentPage = 1;
-      const filtered = applyFiltersAndSearch(state.allData, state.filters, state.keyword);
+      const filtered = applyFiltersSearchSort(state.allData, state.filters, state.keyword, state.sortOption);
       state.displayedData = filtered.slice(0, state.itemsPerPage);
     },
     setKeyword(state, action: PayloadAction<string>) {
       state.keyword = action.payload;
       state.currentPage = 1;
-      const filtered = applyFiltersAndSearch(state.allData, state.filters, state.keyword);
+      const filtered = applyFiltersSearchSort(state.allData, state.filters, state.keyword, state.sortOption);
       state.displayedData = filtered.slice(0, state.itemsPerPage);
     },
     resetFilters(state) {
@@ -132,9 +148,16 @@ const contentSlice = createSlice({
     },
     loadMore(state) {
       state.currentPage += 1;
-      const filtered = applyFiltersAndSearch(state.allData, state.filters, state.keyword);
+      const filtered = applyFiltersSearchSort(state.allData, state.filters, state.keyword, state.sortOption);
       state.displayedData = filtered.slice(0, state.currentPage * state.itemsPerPage);
     },
+    setSortOption(state, action: PayloadAction<SortOption>) {
+      state.sortOption = action.payload;
+      const filtered = applyFiltersSearchSort(state.allData, state.filters, state.keyword, state.sortOption);
+      state.displayedData = filtered.slice(0, state.currentPage * state.itemsPerPage);
+    },
+  
+
   },
   extraReducers: (builder) => {
     builder
@@ -145,7 +168,7 @@ const contentSlice = createSlice({
       .addCase(fetchContents.fulfilled, (state, action) => {
         state.loading = false;
         state.allData = action.payload;
-        const filtered = applyFiltersAndSearch(action.payload, state.filters, state.keyword);
+        const filtered = applyFiltersSearchSort(action.payload, state.filters, state.keyword, state.sortOption);
         state.displayedData = filtered.slice(0, state.itemsPerPage);
       })
       .addCase(fetchContents.rejected, (state, action) => {
@@ -155,5 +178,6 @@ const contentSlice = createSlice({
   },
 });
 
-export const { setFilters, setKeyword, resetFilters, loadMore } = contentSlice.actions;
+export const { setFilters, setKeyword, resetFilters, loadMore, setSortOption } = contentSlice.actions;
+
 export default contentSlice.reducer;

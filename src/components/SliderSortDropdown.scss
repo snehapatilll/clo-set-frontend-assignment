@@ -1,0 +1,27 @@
+.sort-dropdown, .price-slider {
+    margin-bottom: 1rem;
+    text-align: end;
+    background: transparent;
+
+
+  label {
+    color:#dbd6d6;
+    margin-right: 0.5rem;
+  }
+
+  select, input[type="range"] {
+    background: transparent;
+    color: #dbd6d6;
+    padding: 0.3rem 0.6rem;
+    border: none;  
+           
+  }
+
+  input[type="range"] {
+    width: 150px;
+    background: transparent;
+  }
+  option{
+     background-color: #1f1f1f;
+  }
+}
