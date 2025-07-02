@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { PricingOption, setFilters, resetFilters } from '../redux/contentSlice';
+import './FilterPanel.scss';
 
 const pricingOptions: PricingOption[] = ['Free', 'Paid', 'View Only'];
 
@@ -19,7 +20,8 @@ const FilterPanel: React.FC = () => {
 
   return (
     <div className="filter-panel">
-      <h3>Pricing Options</h3>
+    <div className="checkbox">  
+      <div>Pricing Options</div>
       {pricingOptions.map(option => (
         <label key={option}>
           <input
@@ -30,8 +32,8 @@ const FilterPanel: React.FC = () => {
           {option}
         </label>
       ))}
-
-      <button onClick={() => dispatch(resetFilters())}>Reset</button>
+      </div>
+      <div  className ="button" onClick={() => dispatch(resetFilters())}>Reset</div>
     </div>
   );
 };

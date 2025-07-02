@@ -15,7 +15,6 @@ const App: React.FC = () => {
 
   return (
     <div className="app">
-      <h1>Store Content</h1>
       <SearchBar />
       <FilterPanel />
       <ContentGrid />
